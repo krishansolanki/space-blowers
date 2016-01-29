@@ -1,0 +1,11 @@
+{
+  "name": "space-blower",
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "websocket": "1.0.22"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}
