@@ -19,4 +19,12 @@ Position.prototype.setOrientation = function(newOrientation) {
 	return this;
 }
 
+Position.prototype.distance = function(Position) {
+	// squareroot ( (x2 - x1)^2 + (y2 - y1)^2 )
+	xdiff = Position.x - this.x;
+	ydiff = Position.y - this.y;
+
+	return Math.sqrt( (xdiff * xdiff) + (ydiff + ydiff) );
+}
+
 module.exports = Position;
