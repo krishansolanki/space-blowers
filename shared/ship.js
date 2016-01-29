@@ -3,6 +3,11 @@ MovableObjects = require('./MovableObjects');
 function ship(name, position, radius, player) {
 	MovableObjects.call(this, name, position radius)
 	this.player = player;
+	this.alive = true;
+}
+
+ship.prototype.collide() {
+	this.alive = false;
 }
 
 ship.prototype = new MovableObjects();
