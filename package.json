@@ -1,9 +1,10 @@
 {
   "name": "space-blower",
-  "version": "1.0.0",
-  "dependencies": {},
-  "devDependencies": {
-    "websocket": "1.0.22"
+  "description": "blow shit up",
+  "version": "0.1.0",
+  "dependencies": {
+    "express": "^4.10.2",
+    "socket.io": "^1.4.5"
   },
   "engines": {
     "node": ">=0.10.0"
