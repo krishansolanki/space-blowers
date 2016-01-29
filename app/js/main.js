@@ -1,58 +1,50 @@
 var Main = function(game){
+    var that = {};
+    var cursors;
+    var bullet;
+    var bullets;
+    var bulletTime = 0;
+    var shipManagerInstance = shipManager();
 
-};
-
-var sprite;
-var cursors;
-
-var bullet;
-var bullets;
-var bulletTime = 0;
-var ship = Ship();
-
-function fireBullet () {
-
-    if (game.time.now > bulletTime)
-    {
-        bullet = bullets.getFirstExists(false);
-
-        if (bullet)
+    function fireBullet () {
+        if (game.time.now > bulletTime)
         {
-            bullet.reset(sprite.body.x + 16, sprite.body.y + 16);
-            bullet.lifespan = 2000;
-            bullet.rotation = sprite.rotation;
-            game.physics.arcade.velocityFromRotation(sprite.rotation, 400, bullet.body.velocity);
-            bulletTime = game.time.now + 50;
+            bullet = bullets.getFirstExists(false);
+
+            if (bullet)
+            {
+                bullet.reset(shipManagerInstance.active().body.x + 46, shipManagerInstance.active().body.y + 43);
+                bullet.lifespan = 2000;
+                bullet.rotation = shipManagerInstance.active().rotation;
+                game.physics.arcade.velocityFromRotation(shipManagerInstance.active().rotation, 800, bullet.body.velocity);
+                bulletTime = game.time.now + 50;
+            }
+        }
+
+    }
+
+    function screenWrap (sprite) {
+        if (sprite.x < 0)
+        {
+            sprite.x = game.width;
+        }
+        else if (sprite.x > game.width)
+        {
+            sprite.x = 0;
+        }
+
+        if (sprite.y < 0)
+        {
+            sprite.y = game.height;
+        }
+        else if (sprite.y > game.height)
+        {
+            sprite.y = 0;
         }
     }
 
-}
 
-function screenWrap (sprite) {
-
-    if (sprite.x < 0)
-    {
-        sprite.x = game.width;
-    }
-    else if (sprite.x > game.width)
-    {
-        sprite.x = 0;
-    }
-
-    if (sprite.y < 0)
-    {
-        sprite.y = game.height;
-    }
-    else if (sprite.y > game.height)
-    {
-        sprite.y = 0;
-    }
-
-}
-
-Main.prototype = {
-
-	create: function() {
+    that.create = function() {
         //  This will run in Canvas mode, so let's gain a little speed and display
         game.renderer.clearBeforeRender = false;
         game.renderer.roundPixels = true;
@@ -62,6 +54,7 @@ Main.prototype = {
 
         //  A spacey background
         game.add.tileSprite(0, 0, game.width, game.height, 'space');
+
 
         //  Our ships bullets
         bullets = game.add.group();
@@ -73,35 +66,43 @@ Main.prototype = {
         bullets.setAll('anchor.x', 0.5);
         bullets.setAll('anchor.y', 0.5);
 
-        ship.add(game, 300, 300);
-        ship.add(game, 600, 600);
+        shipManagerInstance.add(game, 300, 300);
+        shipManagerInstance.add(game, 600, 600);
 
         //  Game input
         cursors = game.input.keyboard.createCursorKeys();
         game.input.keyboard.addKeyCapture([ Phaser.Keyboard.SPACEBAR ]);
-	},
+    };
 
-	update: function() {
+    that.update = function() {
+
+        var shipPosition = {
+            x: shipManagerInstance.getShip(1).x,
+            y: shipManagerInstance.getShip(1).y,
+            rotation: shipManagerInstance.getShip(1).rotation
+        };
+
+        var currentShip = shipManagerInstance.active();
         if (cursors.up.isDown)
         {
-            game.physics.arcade.accelerationFromRotation(sprite.rotation, 200, sprite.body.acceleration);
+            game.physics.arcade.accelerationFromRotation(currentShip.rotation, 200, currentShip.body.acceleration);
         }
         else
         {
-            sprite.body.acceleration.set(0);
+            currentShip.body.acceleration.set(0);
         }
 
         if (cursors.left.isDown)
         {
-            sprite.body.angularVelocity = -300;
+            currentShip.body.angularVelocity = -300;
         }
         else if (cursors.right.isDown)
         {
-            sprite.body.angularVelocity = 300;
+            currentShip.body.angularVelocity = 300;
         }
         else
         {
-            sprite.body.angularVelocity = 0;
+            currentShip.body.angularVelocity = 0;
         }
 
         if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
@@ -109,13 +110,14 @@ Main.prototype = {
             fireBullet();
         }
 
-        screenWrap(sprite);
+        screenWrap(currentShip);
 
         bullets.forEachExists(screenWrap, this);
-	},
+    };
 
-	gameOver: function(){
-		this.game.state.start('GameOver');
-	}
+    that.gameOver = function() {
+        this.game.state.start('GameOver');
+    };
 
+    return that;
 };
