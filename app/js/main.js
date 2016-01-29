@@ -16,7 +16,7 @@ var Main = function(game){
                 bullet.reset(shipManagerInstance.active().body.x + 46, shipManagerInstance.active().body.y + 43);
                 bullet.lifespan = 2000;
                 bullet.rotation = shipManagerInstance.active().rotation;
-                game.physics.arcade.velocityFromRotation(shipManagerInstance.active().rotation, 400, bullet.body.velocity);
+                game.physics.arcade.velocityFromRotation(shipManagerInstance.active().rotation, 800, bullet.body.velocity);
                 bulletTime = game.time.now + 50;
             }
         }

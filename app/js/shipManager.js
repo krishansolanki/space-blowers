@@ -19,7 +19,7 @@ var shipManager = function(){
         game.physics.enable(sprite, Phaser.Physics.ARCADE);
 
         sprite.body.drag.set(100);
-        sprite.body.maxVelocity.set(200);
+        sprite.body.maxVelocity.set(300);
         ships.push(sprite);
     };
 
