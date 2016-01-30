@@ -3,9 +3,9 @@
 <head> 
 	<meta charset="UTF-8" />
 	<title>Phaser Template</title>
-	<script type="text/javascript" src="../node_modules/socket.io/node_modules/socket.io-client/socket.io.js"></script>
-        <script type="text/javascript" src="../app/js/shipManager.js"></script>
-        <script type="text/javascript" src="../app/js/phaser.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script type="text/javascript" src="../app/js/shipManager.js"></script>
+    <script type="text/javascript" src="../app/js/phaser.min.js"></script>
 	<script type="text/javascript" src="../app/js/boot.js"></script>
 	<script type="text/javascript" src="../app/js/preload.js"></script>
 	<script type="text/javascript" src="../app/js/gametitle.js"></script>
@@ -20,11 +20,11 @@
 
     <script type="text/javascript">
 		(function() {
-				var socket = io();
-				socket.connect('http://10.5.6.125:3000');
+				//var socket = io();
+				//socket.connect('http://10.5.6.125:3000');
 
 				//Create a new game that fills the screen
-				game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO);
+				game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.WEBGL);
 				
 				//Add all states
 				game.state.add("Boot", Boot);

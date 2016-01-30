@@ -13,7 +13,7 @@ var Main = function(game){
 
             if (bullet)
             {
-                bullet.reset(shipManagerInstance.active().body.x + 46, shipManagerInstance.active().body.y + 43);
+                bullet.reset(shipManagerInstance.active().x, shipManagerInstance.active().y);
                 bullet.lifespan = 2000;
                 bullet.rotation = shipManagerInstance.active().rotation;
                 game.physics.arcade.velocityFromRotation(shipManagerInstance.active().rotation, 800, bullet.body.velocity);
@@ -60,13 +60,15 @@ var Main = function(game){
         bullets = game.add.group();
         bullets.enableBody = true;
         bullets.physicsBodyType = Phaser.Physics.ARCADE;
+        //bullets.scale.set(0.35, 0.35);
 
         //  All 40 of them
         bullets.createMultiple(40, 'bullet');
         bullets.setAll('anchor.x', 0.5);
         bullets.setAll('anchor.y', 0.5);
 
-        shipManagerInstance.add(game, 300, 300);
+
+        shipManagerInstance.add(game, 0, 0);
         shipManagerInstance.add(game, 600, 600);
 
         //  Game input
