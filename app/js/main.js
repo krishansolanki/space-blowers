@@ -13,7 +13,10 @@ var Main = function(game){
 
             if (bullet)
             {
-                bullet.reset(shipManagerInstance.active().x, shipManagerInstance.active().y);
+                var radius = 90;
+                var newX = shipManagerInstance.active().x + radius * Math.cos(shipManagerInstance.active().rotation);
+                var newY = shipManagerInstance.active().y + radius * Math.sin(shipManagerInstance.active().rotation);
+                bullet.reset(newX, newY);
                 bullet.lifespan = 2000;
                 bullet.rotation = shipManagerInstance.active().rotation;
                 game.physics.arcade.velocityFromRotation(shipManagerInstance.active().rotation, 800, bullet.body.velocity);
